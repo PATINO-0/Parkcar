@@ -8,7 +8,7 @@ class HistoryStore {
 
   static Future<void> init() async {
     await Hive.initFlutter();
-    await Hive.openBox(boxName); // Box dinámico para máxima compatibilidad
+    await Hive.openBox(boxName); // Box dinámico
   }
 
   static Box _box() => Hive.box(boxName);

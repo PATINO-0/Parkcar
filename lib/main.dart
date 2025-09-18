@@ -4,7 +4,6 @@
 // - Lista de vehículos activos con acciones: "Dar salida" y "Eliminar".
 // - Histórico (Hive) accesible desde el AppBar.
 // Correcciones: uso de Future en estado (_futureVehicles) + _reload() tras cambios.
-// Soporta Web gracias a la inicialización de DB en DBHelper.
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -91,7 +90,7 @@ class _HomePageState extends State<HomePage> {
         await _reload(); // recargar lista
       }
     } catch (e) {
-      // Mostrar el error real (p.ej., 'no such table', UNIQUE, etc.)
+      // Mostrar el error real (p.ej., 'UNIQUE constraint failed', etc.)
       if (mounted) _showSnack(context, 'Error al ingresar: $e');
     }
   }
@@ -150,7 +149,7 @@ class _HomePageState extends State<HomePage> {
 
     if (ok != true) return;
 
-    // Guardar en Hive (histórico) y eliminar de SQLite (activos).
+    // Guardar en Hive (histórico) y eliminar de la lista de activos.
     await HistoryStore.addRecord(
       plate: v.plate,
       type: v.type,
